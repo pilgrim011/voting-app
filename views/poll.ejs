@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/main.css">
+    <title>Poll</title>
+    <script type="text/javascript" src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+  </head>
+  <body>
+    <%- include("user"); %>
+    <h1><%-que%></h1>
+    <p>I'd like to vote for:</p>
+    <div class = "form">
+  <form action="" method="post" id="pollform" onsubmit="return voted ();">
+  <select name = <%-que%>>
+    <%for (var i=0;i<arrKeys.length;i++){%>
+<option value= <%-arrKeys[i]%> > <%-arrKeys[i]%> </option>
+<%}%>
+  </select>
+  <br>
+  <input type="submit" value="Vote">
+  </form>
+  </div>
+
+
+  <%if (array.length>3){%>
+    <canvas id="myChart" width="300" height="300"></canvas>
+  <script>
+
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: <%- JSON.stringify(arrKeys); %>,
+          datasets: [{
+              label: '# of Votes',
+              data: <%- JSON.stringify(arrVals); %> ,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        responsive: false,
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
+  </script>
+  <%}%>
+  <%if (isLogged){%>
+
+<a href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'facebook-share-dialog','width=626,height=436');return false;">Share on Facebook</a>
+  <form action="delete" method="post" id="delete">
+  <input type="submit" value="Delete poll">
+</form>
+<%}%>
+  </body>
+</html>

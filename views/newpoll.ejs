@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="/main.css">
+    <title>My polls</title>
+
+  </head>
+  <body>
+<%- include("user"); %>
+<%if (isLogged){%>
+    <div id = "newpoll">
+      <h1>Make a new poll!</h1>
+      <form action="" method="post" id="pollform" onsubmit="return validate ();">
+       Title: your question<br>
+       <input type="text" name="title" id = "title" pattern="^[^\s]+(\s+[^\s]+)*$" value=""><br>
+       Options: enter options separated by commas, without spaces<br>
+       <input type="text" name="options" id = "options" pattern="^[^\s]+(\s+[^\s]+)*$" value=""><br>
+
+       <input type="submit" id = "submit" value="Submit">
+</form>
+</div>
+<%}%>
+<% if (!isLogged){%>
+<script>
+alert("Unauthorized access!");
+</script>
+<%}%>
+</body>
+</html>

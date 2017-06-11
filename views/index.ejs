@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/main.css">
+    <title>Voting app</title>
+
+  </head>
+  <body>
+<%- include("user"); %>
+<div class="contain">
+      <%for (var l=0;l<poll.length;l++){%>
+<div id = "polls">
+    <a href= <%- poll[l] %> >
+
+    <%-quest[l]%>
+
+    </a></div><br>
+<%}%>
+</div>
+</body>
+</html>

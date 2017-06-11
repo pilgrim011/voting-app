@@ -1,0 +1,111 @@
+
+body {
+    background-color: #2E3436;
+}
+.contain {
+   padding-top: 50px;
+
+}
+.home{
+position: absolute;
+    left: 0px;
+    border: 1px solid white;
+    background-color: #2E3436;
+}
+.login{
+  position: absolute;
+  right: 0px;
+  background-color: #2E3436;
+    border: 1px solid white;
+    color: white;
+    padding: 10px 10px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+
+}
+#polls{
+  background-color: black;
+    color: #FAFCFC;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    margin: auto;
+    border-style: double;
+    width: 75%;
+}
+a {
+    text-decoration: none;
+    color:white;
+}
+h1,p{
+  text-align: center;
+  color:white;
+}
+#myChart {
+    padding: 20px;
+    margin: auto;
+    display: block;
+    width: auto;
+}
+.form{
+  padding: 20px 20px;
+  text-align: center;
+    margin: auto;
+    display: block;
+
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+li {
+    float: left;
+    margin: auto;
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content form {
+    color: black;
+    background-color: #f9f9f9;
+    padding: 1px 1px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.dropdown-content form:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+#pollform{
+  color:white;
+}

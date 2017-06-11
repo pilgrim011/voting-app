@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/main.css">
+    <title>My polls</title>
+
+  </head>
+  <body>
+<%- include("user"); %>
+    <div id = "polls">
+      <%for (var l=0;l<poll.length;l++){%>
+
+    <a href= <%- poll[l] %> >
+
+    <%-quest[l]%>
+
+    </a><br>
+<%}%>
+
+
+
+    </div>
+
+</body>
+</html>

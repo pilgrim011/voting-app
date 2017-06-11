@@ -1,0 +1,25 @@
+{
+  "name": "voting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "canvas": "^1.6.5",
+    "connect-ensure-login": "^0.1.1",
+    "ejs": "^2.3.3",
+    "express": "^4.13.1",
+    "express-session": "^1.11.3",
+    "morgan": "^1.8.2",
+    "mysql": "^2.13.0",
+    "nodemon": "^1.11.0",
+    "passport": "^0.2.2",
+    "passport-facebook": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zoran Stanic",
+  "license": "ISC"
+}

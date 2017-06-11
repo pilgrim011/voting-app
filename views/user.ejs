@@ -1,0 +1,23 @@
+
+      <% if (isLogged){ %>
+
+
+<ul>
+  <li><a href= "/">Home</a></li>
+<li><a href= "mypolls">My polls</a></li>
+<li><a href= "newpoll">New poll</a></li>
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn"><%- currentUser %></a>
+    <div class="dropdown-content">
+      <form action="/logout"><input type="submit" value = "Logout"></form>
+    </div>
+    </li>
+</ul>
+
+        <% } else { %>
+          <ul>
+          <li><a href= "/" class="home">Home</a></li>
+        <li><form action="/login/facebook"><input type="submit" class="login" value="Log in with Facebook"></form></li>
+         </ul>
+
+      <% } %>
