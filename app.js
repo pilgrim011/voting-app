@@ -35,7 +35,6 @@ var app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 // Configure view engine to render EJS templates.
-app.set('etag', false);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(require('body-parser').urlencoded({ extended: true }));
@@ -47,11 +46,18 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveU
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+app.get('/favicon.ico', function(req, res) {
+    res.sendStatus(204);
+});
 // Define routes.
 app.get('/', function(req, res) {
+
   app.locals.session = req.sessionID;
   res.locals.isLogged = req.isAuthenticated();
+  if (res.locals.isLogged){
+    res.locals.currentUser = req.user.displayName;
+    console.log(res.locals.currentUser);
+  }
   db.getConnection(function(err, connection) {
 if (err) throw err;
     connection.query("SELECT tabname FROM home", function (err, results){
@@ -91,8 +97,8 @@ app.get('/login/facebook/return',
 passport.authenticate('facebook', { failureRedirect: '/failure' }),
 cel.ensureLoggedIn(),
 function(req, res) {
-  app.locals.currentUser = req.user.displayName;
-  console.log(app.locals.currentUser);
+  res.locals.currentUser = req.user.displayName;
+  console.log(res.locals.currentUser);
   res.locals.isLogged = req.isAuthenticated();
   res.redirect('/');
 });
@@ -105,13 +111,17 @@ function(req, res){
   });
 });
 app.get("/mypolls", function(req, res) {
-  console.log(req.body.sessionID);
+  console.log(req);
   res.locals.isLogged = req.isAuthenticated();
+
+    res.locals.currentUser = req.user.displayName;
+    console.log(res.locals.currentUser);
+
   console.log("mypolls");
 
   db.getConnection(function(err, connection) {
     if (err) throw err;
-    connection.query("SELECT tabname FROM home WHERE author = ?", [app.locals.currentUser], function (err, results){
+    connection.query("SELECT tabname FROM home WHERE author = ?", [res.locals.currentUser], function (err, results){
       if (err) throw err;
       console.log(results);
       var poll = [];
@@ -121,7 +131,7 @@ app.get("/mypolls", function(req, res) {
         }
       }
 
-      connection.query("SELECT quest FROM home WHERE author = ?", [app.locals.currentUser], function (err, results){
+      connection.query("SELECT quest FROM home WHERE author = ?", [res.locals.currentUser], function (err, results){
         if (err) throw err;
         console.log(results);
         var quest = [];
@@ -148,13 +158,23 @@ app.get("/mypolls", function(req, res) {
 
 });
 app.get("/newpoll", function(req, res) {
+  console.log(req);
   res.locals.isLogged = req.isAuthenticated();
+
+    res.locals.currentUser = req.user.displayName;
+    console.log(res.locals.currentUser);
+
   res.render("newpoll");
 
 
 });
 app.post("/newpoll", function (req,res){
+  console.log(req);
   res.locals.isLogged = req.isAuthenticated();
+
+    res.locals.currentUser = req.user.displayName;
+    console.log(res.locals.currentUser);
+
   console.log(req.body.options);
   var title = req.body.title;
   console.log(title);
@@ -175,10 +195,10 @@ app.post("/newpoll", function (req,res){
     connection.query(merge, function (err, results){
       if (err) throw err;
       console.log(results);
-      connection.query("INSERT INTO home (tabname,quest,author) VALUES (?,?,?)", [pollid, title, app.locals.currentUser], function (err, results){
+      connection.query("INSERT INTO home (tabname,quest,author) VALUES (?,?,?)", [pollid, title, res.locals.currentUser], function (err, results){
         if (err) throw err;
         console.log(results);
-        connection.query("INSERT INTO ?? (??,??) VALUES (?,?)", [pollid, 'question','author', title, app.locals.currentUser], function (err, results){
+        connection.query("INSERT INTO ?? (??,??) VALUES (?,?)", [pollid, 'question','author', title, res.locals.currentUser], function (err, results){
           if (err) throw err;
           console.log(results);
           connection.release();
@@ -193,9 +213,14 @@ app.post("/newpoll", function (req,res){
 });
 
 app.post("/delete", function(req, res) {
+  console.log(req);
   var strip = req.headers.referer.substr(req.headers.referer.lastIndexOf('/') + 1);
   console.log(strip);
   res.locals.isLogged = req.isAuthenticated();
+
+    res.locals.currentUser = req.user.displayName;
+    console.log(res.locals.currentUser);
+
   db.getConnection(function(err, connection) {
     if (err) throw err;
     connection.query("DROP TABLE ??", [strip], function (err, results){
@@ -213,7 +238,12 @@ connection.release();
   });
 });
 app.post("/:id", function(req, res) {
+  console.log(req);
   res.locals.isLogged = req.isAuthenticated();
+  if (res.locals.isLogged){
+    res.locals.currentUser = req.user.displayName;
+    console.log(res.locals.currentUser);
+  }
   var pollid = req.params.id;
   var key = Object.keys(req.body)[0];
   console.log(key);
@@ -232,14 +262,24 @@ app.post("/:id", function(req, res) {
 });
 
 app.get("/:id", function(req, res) {
-
+console.log(req);
   var id = req.params.id;
+  console.log(id);
+  console.log(req.body);
   res.locals.isLogged = req.isAuthenticated();
+
+  if (res.locals.isLogged){
+    res.locals.currentUser = req.user.displayName;
+    console.log(res.locals.currentUser);
+  }
+
   db.getConnection(function(err, connection) {
-    var arrKeys = [];
-    var sortingArr = [];
     if (err) throw err;
+
+
     connection.query("SELECT column_name FROM information_schema.columns WHERE table_name=?", [id], function (err, results){
+      var arrKeys = [];
+      var sortingArr = [];
       if (err) throw err;
 
       for (var i in results){
@@ -250,7 +290,7 @@ app.get("/:id", function(req, res) {
       }
       arrKeys.splice(0, 3);
       res.locals.arrKeys = arrKeys;
-      });
+
       connection.query("SELECT * FROM ??",[id] , function (err, results){
         if (err) throw err;
         var arrOfObjects = results;
@@ -282,13 +322,14 @@ app.get("/:id", function(req, res) {
           }
           connection.release();
           res.render("poll");
+
         });
       });
 
 
   });
 
-
+});
 });
 
 
@@ -298,7 +339,8 @@ app.use(function (req, res, next) {
 });
 app.use(function(err, req, res, next) {
   console.error(err);
-    res.end("It's an error! That's all we know");
+  res.status(500).send({status:500, message: 'internal error', type:'internal'});
+
 });
 
 app.listen(process.env.PORT || 5000);
