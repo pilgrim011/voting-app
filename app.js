@@ -320,9 +320,14 @@ console.log(req);
               res.locals.que = result[i][j];
             }
           }
+          connection.query("SELECT author FROM home WHERE tabname=?",[id] , function (err, results){
+            if (err) throw err;
+            var author = results[0].author;
+            res.locals.author = author;
+console.log(author);
           connection.release();
           res.render("poll");
-
+});
         });
       });
 
