@@ -1,0 +1,1 @@
+Full stack app for user contributed polls and live results. Used technologies and modules: Node.js (Express), JavaScript, HTML, CSS, Passport for auth, MySQL, EJS, Chart.js. App is live at https://myvoting-app.herokuapp.com/.
