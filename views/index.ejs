@@ -2,12 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="description" content="Vote polls app">
+  <meta name="keywords" content="vote, polls, pollz, voting, questionnaire, glasanje, anketa">
+  <meta name="author" content="Zoran Stanić">
     <link rel="stylesheet" type="text/css" href="/main.css">
-    <title>Voting app</title>
-
+    <title>Pollz</title>
   </head>
   <body>
 <%- include("user"); %>
+
+<div class = "pollz">Welcome to Pollz
+
+online voting app with instant chart results. Below are the polls submitted by Pollz users.
+
+Click a poll to see the results and vote, or <a href="/login/facebook">login</a> and create new poll.
+
+</div>
+
 <div class="contain">
       <%for (var l=0;l<poll.length;l++){%>
 <div id = "polls">
